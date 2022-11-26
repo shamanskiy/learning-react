@@ -2,16 +2,7 @@ const myForm = document.querySelector("#myForm")
 const myInput = document.querySelector("#myInput")
 const myList = document.querySelector("#myList")
 
-myForm.addEventListener("submit", function(e) {
-    e.preventDefault()
-    if (myInput.value == "") {
-        return
-    }
-    myList.insertAdjacentHTML("beforeend", listItemTemplate(myInput.value))
-    myInput.value = ""
-
-    saveData()
-})
+onLoad()
 
 function onLoad() {
     let savedListItems = []
@@ -24,15 +15,16 @@ function onLoad() {
     }).join("")
 }
 
-onLoad()
+myForm.addEventListener("submit", function(e) {
+    e.preventDefault()
+    if (myInput.value == "") {
+        return
+    }
+    myList.insertAdjacentHTML("beforeend", listItemTemplate(myInput.value))
+    myInput.value = ""
 
-function listItemTemplate(value) {
-    return `<li>
-                <span class="value">${value}</span> 
-                <button onclick="editHandler(this)">Edit</button> 
-                <button onclick="deleteHandler(this)">Delete</button>
-            </li>`
-}
+    saveData()
+})
 
 function saveData() {
     let listItemValues = []
@@ -59,4 +51,12 @@ function deleteHandler(button) {
 
 function getValue(listItem) {
     return listItem.querySelector(".value").innerHTML
+}
+
+function listItemTemplate(value) {
+    return `<li>
+                <span class="value">${value}</span> 
+                <button onclick="editHandler(this)">Edit</button> 
+                <button onclick="deleteHandler(this)">Delete</button>
+            </li>`
 }

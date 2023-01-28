@@ -4,7 +4,7 @@ import Axios from "axios"
 
 import Page from "./Page"
 
-function CreatePost() {
+function CreatePost(props) {
   const [title, setTitle] = useState()
   const [body, setBody] = useState()
   const navigate = useNavigate()
@@ -13,6 +13,7 @@ function CreatePost() {
     try {
       const response = await Axios.post("/create-post", { title, body, token: localStorage.getItem("complexAppToken") })
       // redirect to new post url
+      props.addFlashMessage("Congrats, you successfully created a post!")
       navigate(`/post/${response.data}`)
       console.log("new post was created")
     } catch (e) {

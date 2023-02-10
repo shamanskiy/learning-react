@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom"
 import Page from "./Page"
 
 import Axios from "axios"
+import LoadingDotsIcon from "./LoadingDotsIcon"
 
 function ComponentName() {
   const { id } = useParams()
@@ -10,22 +11,29 @@ function ComponentName() {
   const [post, setPost] = useState()
 
   useEffect(() => {
+    const request = Axios.CancelToken.source()
+
     async function fetchPost() {
       try {
-        const response = await Axios.get(`/post/${id}`)
+        const response = await Axios.get(`/post/${id}`, { cancelToken: request.token })
         setPost(response.data)
         setIsLoading(false)
       } catch (error) {
-        console.log(error)
+        console.log("There was a problem or a request was canceled")
       }
     }
     fetchPost()
+
+    // a clean up function to run when the component is unmounted
+    return () => {
+      request.cancel()
+    }
   }, [])
 
   if (isLoading)
     return (
       <Page title="...">
-        <div>Loading...</div>
+        <LoadingDotsIcon />
       </Page>
     )
 

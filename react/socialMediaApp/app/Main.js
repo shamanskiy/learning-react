@@ -17,6 +17,7 @@ import Terms from "./components/Terms"
 import CreatePost from "./components/CreatePost"
 import ViewSinglePost from "./components/ViewSinglePost"
 import FlashMessages from "./components/FlashMessages"
+import Profile from "./components/Profile"
 
 function Main() {
   const initialState = {
@@ -65,6 +66,7 @@ function Main() {
           <Header />
           <Routes>
             <Route path="/" element={state.loggedIn ? <Home /> : <HomeGuest />} />
+            <Route path="profile/:username/*" element={<Profile />} />
             <Route path="/create-post" element={<CreatePost />} />
             <Route path="/post/:id" element={<ViewSinglePost />} />
             <Route path="/about-us" element={<About />} />

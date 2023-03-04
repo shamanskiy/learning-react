@@ -5,11 +5,13 @@ import ReactMarkdown from "react-markdown"
 import ReactTooltip from "react-tooltip"
 
 import Page from "./Page"
-import LoadingDotsIcon from "./LoadingDotsIcon"
+import LoadingPage from "./LoadingPage"
+import NotFoundPage from "./NotFoundPage"
 
 function ComponentName() {
   const { id } = useParams()
   const [isLoading, setIsLoading] = useState(true)
+  const [notFound, setNotFound] = useState(false)
   const [post, setPost] = useState()
 
   useEffect(() => {
@@ -18,7 +20,11 @@ function ComponentName() {
     async function fetchPost() {
       try {
         const response = await Axios.get(`/post/${id}`, { cancelToken: request.token })
-        setPost(response.data)
+        if (response.data) {
+          setPost(response.data)
+        } else {
+          setNotFound(true)
+        }
         setIsLoading(false)
       } catch (error) {
         console.log("There was a problem or a request was canceled")
@@ -32,12 +38,8 @@ function ComponentName() {
     }
   }, [])
 
-  if (isLoading)
-    return (
-      <Page title="...">
-        <LoadingDotsIcon />
-      </Page>
-    )
+  if (notFound) return <NotFoundPage />
+  if (isLoading) return <LoadingPage />
 
   const date = new Date(post.createdDate)
   const dateFormatted = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`

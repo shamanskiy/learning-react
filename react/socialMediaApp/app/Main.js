@@ -19,6 +19,7 @@ import ViewSinglePost from "./components/ViewSinglePost"
 import FlashMessages from "./components/FlashMessages"
 import Profile from "./components/Profile"
 import EditPost from "./components/EditPost"
+import NotFoundPage from "./components/NotFoundPage"
 
 function Main() {
   const initialState = {
@@ -73,6 +74,7 @@ function Main() {
             <Route path="/post/:id/edit" element={<EditPost />} />
             <Route path="/about-us" element={<About />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
           <Footer />
         </BrowserRouter>

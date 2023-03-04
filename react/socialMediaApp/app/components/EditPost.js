@@ -23,6 +23,7 @@ function EditPost() {
       hasErrors: false,
       errorMessage: ""
     },
+    hasErrors: false,
     isFetching: true,
     isSaving: false,
     id: useParams().id,
@@ -37,12 +38,26 @@ function EditPost() {
         return
       case "titleChange":
         draft.title.value = action.value
+        if (!action.value.trim()) {
+          draft.title.errorMessage = "You must provide a title"
+        } else {
+          draft.title.errorMessage = ""
+        }
+        draft.hasErrors = draft.title.errorMessage || draft.body.errorMessage
         return
       case "bodyChange":
         draft.body.value = action.value
+        if (!action.value.trim()) {
+          draft.body.errorMessage = "You must provide a post content"
+        } else {
+          draft.body.errorMessage = ""
+        }
+        draft.hasErrors = draft.title.errorMessage || draft.body.errorMessage
         return
       case "submitSaveRequest":
-        draft.sendCount++
+        if (!draft.hasErrors) {
+          draft.sendCount++
+        }
         return
       case "saveRequestStarted":
         draft.isSaving = true
@@ -130,6 +145,7 @@ function EditPost() {
             placeholder=""
             autoComplete="off"
           />
+          {state.title.errorMessage && <div className="alert alert-danger small liveValidateMessage">{state.title.errorMessage}</div>}
         </div>
 
         <div className="form-group">
@@ -144,6 +160,7 @@ function EditPost() {
             className="body-content tall-textarea form-control"
             type="text"
           />
+          {state.body.errorMessage && <div className="alert alert-danger small liveValidateMessage">{state.body.errorMessage}</div>}
         </div>
 
         <button className="btn btn-primary" disabled={state.isSaving}>

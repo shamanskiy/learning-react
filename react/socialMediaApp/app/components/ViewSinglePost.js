@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useParams, Link } from "react-router-dom"
 import Axios from "axios"
 import ReactMarkdown from "react-markdown"
+import ReactTooltip from "react-tooltip"
 
 import Page from "./Page"
 import LoadingDotsIcon from "./LoadingDotsIcon"
@@ -46,12 +47,14 @@ function ComponentName() {
       <div className="d-flex justify-content-between">
         <h2>{post.title}</h2>
         <span className="pt-2">
-          <a href="#" className="text-primary mr-2" title="Edit">
+          <a href="#" data-tip="Edit post" data-for="editTooltip" className="text-primary mr-2">
             <i className="fas fa-edit"></i>
           </a>
-          <a className="delete-post-button text-danger" title="Delete">
+          <ReactTooltip id="editTooltip" className="custom-tooltip" />{" "}
+          <a data-tip="Delete post" data-for="deleteTooltip" className="delete-post-button text-danger">
             <i className="fas fa-trash"></i>
           </a>
+          <ReactTooltip id="deleteTooltip" className="custom-tooltip" />
         </span>
       </div>
 
@@ -63,10 +66,7 @@ function ComponentName() {
       </p>
 
       <div className="body-content">
-        <ReactMarkdown
-          children={post.body}
-          allowedElements={["p", "br", "strong", "em", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li"]}
-        />
+        <ReactMarkdown children={post.body} allowedElements={["p", "br", "strong", "em", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li"]} />
       </div>
     </Page>
   )

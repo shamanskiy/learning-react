@@ -47,9 +47,9 @@ function ComponentName() {
       <div className="d-flex justify-content-between">
         <h2>{post.title}</h2>
         <span className="pt-2">
-          <a href="#" data-tip="Edit post" data-for="editTooltip" className="text-primary mr-2">
+          <Link to={`/post/${id}/edit`} data-tip="Edit post" data-for="editTooltip" className="text-primary mr-2">
             <i className="fas fa-edit"></i>
-          </a>
+          </Link>
           <ReactTooltip id="editTooltip" className="custom-tooltip" />{" "}
           <a data-tip="Delete post" data-for="deleteTooltip" className="delete-post-button text-danger">
             <i className="fas fa-trash"></i>
@@ -66,7 +66,10 @@ function ComponentName() {
       </p>
 
       <div className="body-content">
-        <ReactMarkdown children={post.body} allowedElements={["p", "br", "strong", "em", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li"]} />
+        <ReactMarkdown
+          children={post.body}
+          allowedElements={["p", "br", "strong", "em", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li"]}
+        />
       </div>
     </Page>
   )

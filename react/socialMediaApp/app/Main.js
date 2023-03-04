@@ -18,6 +18,7 @@ import CreatePost from "./components/CreatePost"
 import ViewSinglePost from "./components/ViewSinglePost"
 import FlashMessages from "./components/FlashMessages"
 import Profile from "./components/Profile"
+import EditPost from "./components/EditPost"
 
 function Main() {
   const initialState = {
@@ -26,8 +27,8 @@ function Main() {
     user: {
       token: localStorage.getItem("complexAppToken"),
       username: localStorage.getItem("complexAppUsername"),
-      avatar: localStorage.getItem("complexAppAvatar"),
-    },
+      avatar: localStorage.getItem("complexAppAvatar")
+    }
   }
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -69,6 +70,7 @@ function Main() {
             <Route path="profile/:username/*" element={<Profile />} />
             <Route path="/create-post" element={<CreatePost />} />
             <Route path="/post/:id" element={<ViewSinglePost />} />
+            <Route path="/post/:id/edit" element={<EditPost />} />
             <Route path="/about-us" element={<About />} />
             <Route path="/terms" element={<Terms />} />
           </Routes>

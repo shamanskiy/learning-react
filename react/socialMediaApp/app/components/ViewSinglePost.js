@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from "react"
-import { useParams, Link } from "react-router-dom"
+import React, { useState, useEffect, useContext } from "react"
+import { useParams, Link, useNavigate } from "react-router-dom"
 import Axios from "axios"
 import ReactMarkdown from "react-markdown"
 import ReactTooltip from "react-tooltip"
 
 import Page from "./Page"
+import DispatchContext from "../DispatchContext"
+import StateContext from "../StateContext"
 import LoadingPage from "./LoadingPage"
 import NotFoundPage from "./NotFoundPage"
 
 function ComponentName() {
+  const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
+  const navigate = useNavigate()
+
   const { id } = useParams()
   const [isLoading, setIsLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
@@ -44,20 +50,41 @@ function ComponentName() {
   const date = new Date(post.createdDate)
   const dateFormatted = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
 
+  function isOwner() {
+    return appState.user.username == post.author.username
+  }
+
+  async function deleteHandler(e) {
+    const areYouSure = window.confirm("Do you really want to delete this post?")
+    if (areYouSure) {
+      try {
+        const response = await Axios.delete(`/post/${id}`, { data: { token: appState.user.token } })
+        if (response.data == "Success") {
+          appDispatch({ type: "flashMessage", value: "Your post was deleted." })
+          navigate(`/profile/${post.author.username}`)
+        }
+      } catch (e) {
+        console.log("there was a problem deleting the post")
+      }
+    }
+  }
+
   return (
     <Page title={post.title}>
       <div className="d-flex justify-content-between">
         <h2>{post.title}</h2>
-        <span className="pt-2">
-          <Link to={`/post/${id}/edit`} data-tip="Edit post" data-for="editTooltip" className="text-primary mr-2">
-            <i className="fas fa-edit"></i>
-          </Link>
-          <ReactTooltip id="editTooltip" className="custom-tooltip" />{" "}
-          <a data-tip="Delete post" data-for="deleteTooltip" className="delete-post-button text-danger">
-            <i className="fas fa-trash"></i>
-          </a>
-          <ReactTooltip id="deleteTooltip" className="custom-tooltip" />
-        </span>
+        {isOwner() && (
+          <span className="pt-2">
+            <Link to={`/post/${id}/edit`} data-tip="Edit post" data-for="editTooltip" className="text-primary mr-2">
+              <i className="fas fa-edit"></i>
+            </Link>
+            <ReactTooltip id="editTooltip" className="custom-tooltip" />{" "}
+            <a onClick={deleteHandler} data-tip="Delete post" data-for="deleteTooltip" className="delete-post-button text-danger">
+              <i className="fas fa-trash"></i>
+            </a>
+            <ReactTooltip id="deleteTooltip" className="custom-tooltip" />
+          </span>
+        )}
       </div>
 
       <p className="text-muted small mb-4">

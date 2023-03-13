@@ -42,7 +42,7 @@ function ComponentName() {
     return () => {
       request.cancel()
     }
-  }, [])
+  }, [id])
 
   if (notFound) return <NotFoundPage />
   if (isLoading) return <LoadingPage />

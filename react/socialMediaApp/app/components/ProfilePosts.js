@@ -28,13 +28,13 @@ function ProfilePosts() {
     return () => {
       request.cancel()
     }
-  }, [])
+  }, [username])
 
   if (isLoading) return <LoadingDotsIcon />
 
   return (
     <div className="list-group">
-      {posts.map((post) => {
+      {posts.map(post => {
         const date = new Date(post.createdDate)
         const dateFormatted = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
         return (

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, NavLink, Routes, Route } from "react-router-dom"
 import { useImmer } from "use-immer"
 import Axios from "axios"
 
@@ -7,6 +7,8 @@ import StateContext from "../StateContext"
 import Page from "./Page"
 
 import ProfilePosts from "./ProfilePosts"
+import ProfileFollowers from "./ProfileFollowers"
+import ProfileFollowing from "./ProfileFollowing"
 
 function Profile() {
   // pull username parameter from the URL
@@ -96,8 +98,8 @@ function Profile() {
             { cancelToken: request.token }
           )
           setState(draft => {
-            draft.profileData.isFollowing = false
             draft.profileData.counts.followerCount--
+            draft.profileData.isFollowing = false
             draft.followActionLoading = false
           })
         } catch (error) {
@@ -160,18 +162,22 @@ function Profile() {
       </h2>
 
       <div className="profile-nav nav nav-tabs pt-2 mb-4">
-        <a href="#" className="active nav-item nav-link">
+        <NavLink to="" end className="nav-item nav-link">
           Posts: {state.profileData.counts.postCount}
-        </a>
-        <a href="#" className="nav-item nav-link">
+        </NavLink>
+        <NavLink to="followers" className="nav-item nav-link">
           Followers: {state.profileData.counts.followerCount}
-        </a>
-        <a href="#" className="nav-item nav-link">
+        </NavLink>
+        <NavLink to="following" className="nav-item nav-link">
           Following: {state.profileData.counts.followingCount}
-        </a>
+        </NavLink>
       </div>
 
-      <ProfilePosts />
+      <Routes>
+        <Route path="" element={<ProfilePosts />} />
+        <Route path="followers" element={<ProfileFollowers />} />
+        <Route path="following" element={<ProfileFollowing />} />
+      </Routes>
     </Page>
   )
 }

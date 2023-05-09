@@ -30,7 +30,12 @@ function HeaderLoggedIn() {
         <i className="fas fa-search"></i>
       </a>
       <ReactTooltip id="openSearchTooltip" className="custom-tooltip" place="bottom" />{" "}
-      <span className="mr-2 header-chat-icon text-white" data-tip="Open chat" data-for="openChatTooltip">
+      <span
+        onClick={() => appDispatch({ type: "toggleChat" })}
+        className="mr-2 header-chat-icon text-white"
+        data-tip="Open chat"
+        data-for="openChatTooltip"
+      >
         <i className="fas fa-comment"></i>
         <span className="chat-count-badge text-white"> </span>
       </span>

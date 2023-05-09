@@ -11,6 +11,7 @@ import DispatchContext from "./DispatchContext"
 
 import Header from "./components/Header"
 import Home from "./components/Home"
+import Chat from "./components/Chat"
 import HomeGuest from "./components/HomeGuest"
 import Footer from "./components/Footer"
 import About from "./components/About"
@@ -32,7 +33,8 @@ function Main() {
       username: localStorage.getItem("complexAppUsername"),
       avatar: localStorage.getItem("complexAppAvatar")
     },
-    isSearchOpen: false
+    isSearchOpen: false,
+    isChatOpen: false
   }
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -51,6 +53,12 @@ function Main() {
         return
       case "closeSearch":
         draft.isSearchOpen = false
+        return
+      case "toggleChat":
+        draft.isChatOpen = !draft.isChatOpen
+        return
+      case "closeChat":
+        draft.isChatOpen = false
         return
     }
   }
@@ -88,6 +96,7 @@ function Main() {
           <CSSTransition timeout={330} in={state.isSearchOpen} classNames="search-overlay" unmountOnExit>
             <Search />
           </CSSTransition>
+          <Chat />
           <Footer />
         </BrowserRouter>
       </DispatchContext.Provider>

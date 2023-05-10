@@ -32,12 +32,16 @@ function HeaderLoggedIn() {
       <ReactTooltip id="openSearchTooltip" className="custom-tooltip" place="bottom" />{" "}
       <span
         onClick={() => appDispatch({ type: "toggleChat" })}
-        className="mr-2 header-chat-icon text-white"
+        className={"mr-2 header-chat-icon " + (appState.unreadChatCount ? "text-danger" : "text-white")}
         data-tip="Open chat"
         data-for="openChatTooltip"
       >
         <i className="fas fa-comment"></i>
-        <span className="chat-count-badge text-white"> </span>
+        {appState.unreadChatCount ? (
+          <span className="chat-count-badge text-white">{appState.unreadChatCount < 10 ? appState.unreadChatCount : "9+"}</span>
+        ) : (
+          ""
+        )}
       </span>
       <ReactTooltip id="openChatTooltip" className="custom-tooltip" place="bottom" />{" "}
       <Link to={`/profile/${appState.user.username}`} className="mr-2" data-tip="My profile" data-for="myProfileTooltip">

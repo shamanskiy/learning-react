@@ -4,7 +4,7 @@ import { useImmerReducer } from "use-immer"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { CSSTransition } from "react-transition-group"
 import Axios from "axios"
-Axios.defaults.baseURL = "http://localhost:8080"
+Axios.defaults.baseURL = process.env.BACKENDURL || ""
 
 import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
@@ -21,7 +21,7 @@ import FlashMessages from "./components/FlashMessages"
 import Profile from "./components/Profile"
 import EditPost from "./components/EditPost"
 import NotFoundPage from "./components/NotFoundPage"
-const Search = React.lazy(() => import("./components/Search"))
+import Search from "./components/Search"
 const Chat = React.lazy(() => import("./components/Chat"))
 import LoadingDotsIcon from "./components/LoadingDotsIcon"
 

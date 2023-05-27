@@ -1,3 +1,4 @@
+// This serves the built distribution copy of the app on localhost:4000
 const express = require("express")
 const path = require("path")
 const app = new express()

@@ -1,0 +1,3 @@
+[submodule "react/socialMediaApp/backend"]
+	path = react/socialMediaApp/backend
+	url = https://github.com/shamanskiy/react-social-media-app-backend

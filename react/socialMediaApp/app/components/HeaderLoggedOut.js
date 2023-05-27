@@ -15,8 +15,10 @@ function HeaderLoggedOut() {
       const response = await Axios.post("/login", { username, password })
       if (response.data) {
         appDispatch({ type: "login", data: response.data })
+        appDispatch({ type: "flashMessage", value: "You have successfully logged in." })
       } else {
         console.log("incorrect username/password")
+        appDispatch({ type: "flashMessage", value: "Invalid username/password." })
       }
     } catch (e) {
       console.log("there was a problem logging in")
@@ -28,7 +30,7 @@ function HeaderLoggedOut() {
       <div className="row align-items-center">
         <div className="col-md mr-0 pr-md-0 mb-3 mb-md-0">
           <input
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={e => setUsername(e.target.value)}
             name="username"
             className="form-control form-control-sm input-dark"
             type="text"
@@ -38,7 +40,7 @@ function HeaderLoggedOut() {
         </div>
         <div className="col-md mr-0 pr-md-0 mb-3 mb-md-0">
           <input
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
             name="password"
             className="form-control form-control-sm input-dark"
             type="password"

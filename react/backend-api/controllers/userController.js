@@ -4,7 +4,7 @@ const Follow = require("../models/Follow")
 const jwt = require("jsonwebtoken")
 
 // how long a token lasts before expiring
-const tokenLasts = "365d"
+const tokenLasts = "10d"
 
 exports.apiGetPostsByUsername = async function (req, res) {
   try {
@@ -78,7 +78,9 @@ exports.apiLogin = function (req, res) {
     .login()
     .then(function (result) {
       res.json({
-        token: jwt.sign({ _id: user.data._id, username: user.data.username, avatar: user.avatar }, process.env.JWTSECRET, { expiresIn: tokenLasts }),
+        token: jwt.sign({ _id: user.data._id, username: user.data.username, avatar: user.avatar }, process.env.JWTSECRET, {
+          expiresIn: tokenLasts
+        }),
         username: user.data.username,
         avatar: user.avatar
       })
@@ -94,7 +96,9 @@ exports.apiRegister = function (req, res) {
     .register()
     .then(() => {
       res.json({
-        token: jwt.sign({ _id: user.data._id, username: user.data.username, avatar: user.avatar }, process.env.JWTSECRET, { expiresIn: tokenLasts }),
+        token: jwt.sign({ _id: user.data._id, username: user.data.username, avatar: user.avatar }, process.env.JWTSECRET, {
+          expiresIn: tokenLasts
+        }),
         username: user.data.username,
         avatar: user.avatar
       })

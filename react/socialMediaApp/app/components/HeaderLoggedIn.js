@@ -11,6 +11,7 @@ function HeaderLoggedIn() {
 
   function handleLogOut() {
     appDispatch({ type: "logout" })
+    appDispatch({ type: "flashMessage", value: "You have successfully logged out." })
   }
 
   function handlerSearchIcon(e) {

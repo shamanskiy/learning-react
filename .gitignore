@@ -1,6 +1,2 @@
 *node_modules
 *.DS_Store
-*.env
-react/react-course
-dist
-react/socialMediaApp/app/index.html
